@@ -1,0 +1,12 @@
+.mask{
+  mask-image: url('../../public/mask.svg');
+  mask-repeat: no-repeat;
+  mask-size: 40px;
+  position: absolute;
+  @apply text-black-pallete bg-red-pallete;
+
+  .text-stroke {
+    -webkit-text-stroke: 2px blue;
+    color: red;
+  }
+}
