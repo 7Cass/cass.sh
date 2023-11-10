@@ -9,6 +9,7 @@ import { GithubLogo } from '@phosphor-icons/react/dist/ssr'
 export default function Home() {
   const [isHovered, setIsHovered] = useState(false)
   const [maskScale, setMaskScale] = useState(50)
+  const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4]);
   const { x, y } = useMousePosition()
   const size = isHovered ? maskScale * 10 : maskScale
 
@@ -16,6 +17,33 @@ export default function Home() {
     setMaskScale(scale)
     setIsHovered(hover)
   }
+
+  const handleNext = () => {
+    setPositionIndexes((prev) => {
+      const updatedIndexes = prev.map((item) => (item + 1) % 5 );
+      return updatedIndexes;
+    })
+  }
+
+  const handleBack = () => {
+    setPositionIndexes((prevIndexes) => {
+      const updatedIndexes = prevIndexes.map(
+        (prevIndex) => (prevIndex + 4) % 5
+      );
+
+      return updatedIndexes;
+    });
+  };
+
+  const positions = ["center", "left1", "left", "right", "right1"];
+
+  const imageVariants = {
+    center: { x: "0%", scale: 1, zIndex: 5 },
+    left1: { x: "-50%", scale: 0.7, zIndex: 3 },
+    left: { x: "-90%", scale: 0.5, zIndex: 2 },
+    right: { x: "90%", scale: 0.5, zIndex: 1 },
+    right1: { x: "50%", scale: 0.7, zIndex: 3 },
+  };
 
   return (
     <>
@@ -69,73 +97,6 @@ export default function Home() {
             </div>
             <div className="w-full mr-24 mb-36 bg-black-pallete text-red-pallete">
               <div className="relative p-8 flex items-center justify-center w-full h-full">
-                <ArrowLeft
-                  className="absolute left-8 cursor-pointer"
-                  size={36}
-                  weight="thin"
-                />
-                <motion.div
-                  drag="x"
-                  dragConstraints={{ right: 0 }}
-                  className="flex overflow-hidden gap-12 h-full w-full items-center justify-center p-20"
-                >
-                  <div className="flex flex-col items-center border border-red-pallete bg-black-pallete text-red-pallete w-full h-full p-12">
-                    <a
-                      href="https://github.com/7Cass/Rentx"
-                      target="_blank"
-                      className="flex items-center justify-center gap-4 cursor-pointer border border-red-pallete rounded-md py-2 px-4"
-                    >
-                      <h2 className="text-2xl">Rentx</h2>
-                      <GithubLogo width={24} height={24} />
-                    </a>
-                    <div className="w-full flex gap-2 my-8">
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                    </div>
-                    <p>
-                      A REST renting cars API, following best practices and
-                      design patterns. <br />
-                      Was developed when I was studying some introduction about
-                      Backend development and applying for jobs in late 2021.{' '}
-                      <br />
-                      I&apos;ve spent some good weeks working on this and
-                      learned so much about clean architecture and APIs.
-                    </p>
-                    <div className="w-full flex gap-2 my-8">
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Typescript
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Node
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Express
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Postgres
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Clean Code
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        REST
-                      </small>
-                    </div>
-                  </div>
-                </motion.div>
-                <motion.div className="absolute right-8 cursor-pointer">
-                  <ArrowRight size={36} weight="thin" />
-                </motion.div>
               </div>
             </div>
           </section>
@@ -176,69 +137,79 @@ export default function Home() {
               </a>
             </div>
             <div className="w-full mr-24 mb-36 bg-black-pallete text-red-pallete">
-              <div className="relative p-8 flex items-center justify-center w-full h-full">
+              <div className="p-8 flex items-center justify-center w-full h-full">
+                
+                <div style={{ WebkitMask: 'linear-gradient(90deg,#00081400,#000814 4% 96%,#00081400)'}} className="relative overflow-hidden flex items-center justify-center h-full w-full p-20">
                 <ArrowLeft
-                  className="absolute left-8 cursor-pointer"
-                  size={36}
+                  className="z-10 absolute left-8 cursor-pointer"
+                  size={40}
                   weight="thin"
+                  onClick={handleBack}
                 />
-                <div className="flex overflow-hidden gap-12 h-full w-full items-center justify-center p-20">
-                  <div className="flex flex-col items-center border border-red-pallete bg-black-pallete text-red-pallete w-full h-full p-12">
-                    <a
-                      href="https://github.com/7Cass/Rentx"
-                      target="_blank"
-                      className="flex items-center justify-center gap-4 cursor-pointer border border-red-pallete rounded-md py-2 px-4"
-                    >
-                      <h2 className="text-2xl">Rentx</h2>
-                      <GithubLogo width={24} height={24} />
-                    </a>
-                    <div className="w-full flex gap-2 my-8">
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                    </div>
-                    <p>
-                      A REST renting cars API, following best practices and
-                      design patterns. <br />
-                      Was developed when I was studying some introduction about
-                      Backend development and applying for jobs in late 2021.{' '}
-                      <br />
-                      I&apos;ve spent some good weeks working on this and
-                      learned so much about clean architecture and APIs.
-                    </p>
-                    <div className="w-full flex gap-2 my-8">
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-px rounded-full bg-red-pallete"></div>
-                      <div className="h-px w-full flex-1 bg-red-pallete"></div>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Typescript
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Node
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Express
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Postgres
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        Clean Code
-                      </small>
-                      <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
-                        REST
-                      </small>
-                    </div>
-                  </div>
+                  {[0, 1, 2, 3, 4].map((item, index) => (
+                    <motion.div
+                     initial="center"
+                     animate={positions[positionIndexes[index]]}
+                     variants={imageVariants}
+                     transition={{ duration: 0.5}}
+                     key={index}
+                     className={`${positionIndexes[index] !== 0 ? 'blur' : ''} w-1/2 absolute items-center border border-red-pallete bg-black-pallete text-red-pallete h-[90%] p-12`}>
+                      <a
+                        href="https://github.com/7Cass/Rentx"
+                        target="_blank"
+                        className="flex items-center justify-center gap-4 cursor-pointer border border-red-pallete rounded-md py-2 px-4"
+                      >
+                        <h2 className="text-2xl">Rentx</h2>
+                        <GithubLogo width={24} height={24} />
+                      </a>
+                      <div className="w-full flex gap-2 my-8">
+                        <div className="h-px w-full flex-1 bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-full flex-1 bg-red-pallete"></div>
+                      </div>
+                      <p>
+                        A REST renting cars API, following best practices and
+                        design patterns. <br />
+                        Was developed when I was studying some introduction about
+                        Backend development and applying for jobs in late 2021.{' '}
+                        <br />
+                        I&apos;ve spent some good weeks working on this and
+                        learned so much about clean architecture and APIs.
+                      </p>
+                      <div className="w-full flex gap-2 my-8">
+                        <div className="h-px w-full flex-1 bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-px rounded-full bg-red-pallete"></div>
+                        <div className="h-px w-full flex-1 bg-red-pallete"></div>
+                      </div>
+                      <div className="flex flex-wrap items-center justify-center gap-2">
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          Typescript
+                        </small>
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          Node
+                        </small>
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          Express
+                        </small>
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          Postgres
+                        </small>
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          Clean Code
+                        </small>
+                        <small className="text-xs border border-red-pallete p-1.5 w-20 text-center">
+                          REST
+                        </small>
+                      </div>
+                  </motion.div>
+                  ))}
+                  <div className="z-20 absolute right-8 cursor-pointer">
+                  <ArrowRight size={36} weight="thin" onClick={handleNext} />
                 </div>
-                <div className="absolute right-8 cursor-pointer">
-                  <ArrowRight size={36} weight="thin" />
                 </div>
               </div>
             </div>
